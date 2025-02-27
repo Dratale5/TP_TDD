@@ -35,4 +35,27 @@ class LibraryServiceTest {
         verifyNoInteractions(webService);  
         assertEquals(expectedBook, book);
     }
+
+    @Test
+    void givenBookNotInLocalDB_whenFindByIsbn_thenFetchFromWebService() {
+        Book expectedBook = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
+        when(dbService.getBookByIsbn("9782266332439")).thenReturn(null);
+        when(webService.getBookByIsbn("9782266332439")).thenReturn(expectedBook);
+
+        Book book = libraryService.findBookByIsbn("9782266332439");
+
+        assertEquals(expectedBook, book);
+    }
+
+    @Test
+    void givenBookIsInLocalDB_whenFindByTitle_thenReturnBookFromLocalDB() {
+        Book expectedBook = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
+        when(dbService.getBookByTitle("Âmes animales")).thenReturn(expectedBook);
+        when(webService.getBookByTitle("Âmes animales")).thenReturn(expectedBook);
+
+        Book book = libraryService.findBookByTitle("Âmes animales");
+
+        verifyNoInteractions(webService);  
+        assertEquals(expectedBook, book);
+    }
 }
