@@ -51,7 +51,6 @@ class LibraryServiceTest {
     void givenBookIsInLocalDB_whenFindByTitle_thenReturnBookFromLocalDB() {
         Book expectedBook = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
         when(dbService.getBookByTitle("Âmes animales")).thenReturn(expectedBook);
-        when(webService.getBookByTitle("Âmes animales")).thenReturn(expectedBook);
 
         Book book = libraryService.findBookByTitle("Âmes animales");
 

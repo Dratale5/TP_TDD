@@ -21,4 +21,9 @@ public class LibraryService {
         return book;
     }
 
+    public Book findBookByTitle(String title) {
+        Book book = dbservice.getBookByTitle(title);
+        return book;
+    }
+
 }
