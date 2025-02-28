@@ -15,7 +15,7 @@ public class ReservationService {
         listeReservations = new ArrayList<Reservation>();
     }
 
-    public int creerReservation(Adherant _adherant, Book _book) throws Exception {
+    public boolean  creerReservation(Adherant _adherant, Book _book) throws Exception {
         int counter=0;
         for (int i=0;i<listeReservations.size();i++) {
             if (_adherant.equals(listeReservations.get(i).getAdherant())) {
@@ -28,8 +28,20 @@ public class ReservationService {
         if(_book.getIsAvailable()==true) {
             _book.setIsAvailable(false);
             listeReservations.add(new Reservation(_adherant, _book));
-            return listeReservations.size();
+            return true;
         }
         else  { throw new BookNotAvailableException(""); }
+    }
+
+    public boolean annulerReservation(Adherant _adherant, Book _book) {
+        for (int i = 0; i < listeReservations.size(); i++) {
+            Reservation reservation = listeReservations.get(i);
+            if (reservation.getAdherant().equals(_adherant) && reservation.getBookReserved().equals(_book)) {
+                listeReservations.remove(i); 
+                _book.setIsAvailable(true); 
+                return true;
+            }
+        }
+        return false;
     }
 }
