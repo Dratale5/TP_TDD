@@ -34,4 +34,19 @@ public class ReservationServiceTest {
         book.setIsAvailable(false);
         assertThrows(BookNotAvailableException.class, () -> reservationService.creerReservation(adherant, book));
     }
+
+    @Test
+    void givenAdherant_WhenCreatingFourthReservation_ShouldReturnException() throws TooMuchReservationsException {
+        Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
+        Book Firstbook = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
+        Book Secondbook = new Book("9782958608613", "Manuscripto: Les lettres masquées de Venise", "Bruno Scudeller", "Inconnue", BookType.Roman);
+        Book Thirdbook = new Book("9782290233795", "Le tatoueur d'Auschwitz", "Morris Heather", "J'ai lu", BookType.Roman);
+        Book Fourthbook = new Book("9782824638874", "La psy", "Freida McFadden", "City Edition", BookType.BD);
+
+        reservationService.creerReservation(adherant, Firstbook);
+        reservationService.creerReservation(adherant, Secondbook);
+        reservationService.creerReservation(adherant, Thirdbook);
+
+        assertThrows(TooMuchReservationsException.class, () -> creerReservation(adherant, FourthBook));
+    }
 }
