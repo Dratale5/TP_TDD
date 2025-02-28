@@ -1,7 +1,5 @@
 package org.exemple.Services;
 
-import org.exemple.Interfaces.DBService;
-import org.exemple.Interfaces.WebService;
 import org.exemple.Models.Book;
 
 public class LibraryService {

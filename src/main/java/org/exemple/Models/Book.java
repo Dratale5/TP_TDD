@@ -19,4 +19,12 @@ public class Book {
         type=_type;
     }
 
+    public boolean getIsAvailable() {
+        return isAvailable;
+    }
+
+    public void setIsAvailable(boolean _isAvailable) {
+        isAvailable = _isAvailable;
+    }
+
 }
