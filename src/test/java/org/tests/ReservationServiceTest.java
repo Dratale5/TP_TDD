@@ -1,24 +1,31 @@
 package org.tests;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.exemple.Enums.BookType;
 import org.exemple.Exceptions.BookNotAvailableException;
 import org.exemple.Exceptions.TooMuchReservationsException;
 import org.exemple.Models.Adherant;
 import org.exemple.Models.Book;
+import org.exemple.Models.Reservation;
+import org.exemple.Services.LibraryService;
 import org.exemple.Services.ReservationService;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 public class ReservationServiceTest {
     private ReservationService reservationService;
     @BeforeEach
     void setUp() {
-        reservationService = new ReservationService();
+        MailService mailService = Mockito.mock(MailService.class);
+        ReservationService reservationService = new ReservationService(mailService);
     }
 
     @Test
@@ -60,5 +67,21 @@ public class ReservationServiceTest {
         reservationService.creerReservation(adherant, book);
 
         assertTrue(reservationService.annulerReservation(adherant, book));
+    }
+
+    @Test
+    void givenReservation_whenExpired_thenSendMailToAdherant() throws Exception {
+        Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
+        Book book = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
+
+        reservationService.creerReservation(adherant, book);
+
+        ArrayList<Reservation> listeReservations = reservationService.getReservations();
+
+        listeReservations[0].setDateReservation(LocalDate.of(2020, 4, 1));
+
+        reservationService.checkReservationsExpired();
+        
+        verify(mailService).sendMail();
     }
 }
