@@ -24,4 +24,13 @@ public class ReservationServiceTest {
         reservationService.creerReservation(adherant, book);
         assertFalse(book.getIsAvailable()); 
     }
+
+    @Test
+    void testCreerReservationAvecLivreIndisponible() {
+        Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
+        Book book = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
+        book.setIsAvailable(false);
+        reservationService.creerReservation(adherant, book);
+        assertFalse(book.getIsAvailable()); 
+    }
 }
