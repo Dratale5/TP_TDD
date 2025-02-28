@@ -66,4 +66,11 @@ public class IsbnValidatorTest {
 
         assertFalse(result);
     }
+
+    @Test
+    public void WithLetterOtherThanX_ShouldReturnFalse() throws Exception {
+        IsbnValidator validator = new IsbnValidator();
+
+        assertThrows(IncorrectISBNCharacterException.class, () -> validator.validateIsbn("0393A4002X"));
+    }
 }
