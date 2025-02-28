@@ -11,6 +11,8 @@ import org.exemple.Models.Book;
 import org.exemple.Models.Reservation;
 import org.exemple.Services.MailService;
 import org.exemple.Services.ReservationService;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -87,5 +89,20 @@ public class ReservationServiceTest {
         reservationService.checkReservationsExpired();
         
         verify(mailService, times(1)).sendMail(any(Adherant.class), anyList());
+    }
+
+    @Test
+    void givenReservation_whenGettingHistoricListReservationThatIsExpired_ShouldReturnList() throws Exception {
+        Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
+        Book book = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
+
+        reservationService.creerReservation(adherant, book);
+
+        reservationService.annulerReservation(adherant, book);
+
+        ArrayList<Reservation> historicList = reservationService.getHistoricReservation();
+
+        assertEquals(historicList.get(0).getAdherant(), adherant);
+        assertEquals(historicList.get(0).getBookReserved(), book);
     }
 }
