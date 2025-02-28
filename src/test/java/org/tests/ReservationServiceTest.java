@@ -9,23 +9,27 @@ import org.exemple.Exceptions.TooMuchReservationsException;
 import org.exemple.Models.Adherant;
 import org.exemple.Models.Book;
 import org.exemple.Models.Reservation;
-import org.exemple.Services.LibraryService;
+import org.exemple.Services.MailService;
 import org.exemple.Services.ReservationService;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ReservationServiceTest {
     private ReservationService reservationService;
+    private MailService mailService;
+
     @BeforeEach
     void setUp() {
-        MailService mailService = Mockito.mock(MailService.class);
-        ReservationService reservationService = new ReservationService(mailService);
+        mailService = Mockito.mock(MailService.class);
+        reservationService = new ReservationService(mailService);
     }
 
     @Test
@@ -76,12 +80,12 @@ public class ReservationServiceTest {
 
         reservationService.creerReservation(adherant, book);
 
-        ArrayList<Reservation> listeReservations = reservationService.getReservations();
+        ArrayList<Reservation> listeReservations = reservationService.getActualReservations();
 
-        listeReservations[0].setDateReservation(LocalDate.of(2020, 4, 1));
+        listeReservations.get(0).setDateReservation(LocalDate.of(2020, 4, 1));
 
         reservationService.checkReservationsExpired();
         
-        verify(mailService).sendMail();
+        verify(mailService, times(1)).sendMail(any(Adherant.class), anyList());
     }
 }
