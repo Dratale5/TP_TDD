@@ -20,7 +20,7 @@ public class ReservationServiceTest {
     }
 
     @Test
-    void testCreerReservationAvecLivreDisponible() throws Exception {
+    void givenAvailableBook_WhenCreatingReservation_ShouldReturnTrue() throws Exception {
         Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
         Book book = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
         reservationService.creerReservation(adherant, book);
@@ -28,7 +28,7 @@ public class ReservationServiceTest {
     }
 
     @Test
-    void testCreerReservationAvecLivreIndisponible() throws BookNotAvailableException {
+    void givenUnavailableBook_WhenCreatingReservation_ShouldReturnException() throws BookNotAvailableException {
         Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
         Book book = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
         book.setIsAvailable(false);
