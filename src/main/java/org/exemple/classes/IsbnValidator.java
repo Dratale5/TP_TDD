@@ -1,13 +1,15 @@
 package org.exemple.classes;
 
+import org.exemple.Exceptions.IncorrectISBNSizeException;
+
 public class IsbnValidator {
-    public boolean validateIsbn(String ISBN) {
+    public boolean validateIsbn(String ISBN) throws Exception {
         if (ISBN.length()==10) {
             return validateIsbn10(ISBN);
         } else if (ISBN.length()==13) {
             return validateIsbn13(ISBN);
         }
-        return false;
+        throw new IncorrectISBNSizeException("");
     }
 
     private boolean validateIsbn13(String ISBN) {
