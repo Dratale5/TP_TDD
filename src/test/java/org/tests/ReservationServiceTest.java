@@ -50,4 +50,14 @@ public class ReservationServiceTest {
 
         assertThrows(TooMuchReservationsException.class, () -> reservationService.creerReservation(adherant, Fourthbook));
     }
+
+    @Test
+    void givenAdherantAndBook_WhenCancelingReservation_ShouldReturnTrue() throws Exception {
+        Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
+        Book book = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
+
+        reservationService.creerReservation(adherant, book);
+
+        assertTrue(reservationService.annulerReservation(adherant, book));
+    }
 }
