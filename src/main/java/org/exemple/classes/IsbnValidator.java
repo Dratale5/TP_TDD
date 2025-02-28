@@ -23,7 +23,15 @@ public class IsbnValidator {
     private boolean validateIsbn10(String ISBN) {
         int total=0;
         for (int i=0; i<10;i++) {
-            total += Character.getNumericValue(ISBN.charAt(i)) * (10 - i);
+            if (Character.isDigit(ISBN.charAt(i))) {
+                total += Character.getNumericValue(ISBN.charAt(i)) * (10 - i);
+            }
+            else {
+                if (ISBN.charAt(i) == 'X' && i==9) {
+                    total += 10 * (10 - i);
+                } 
+                else return false;
+            }
         }
         return total % 11 == 0;
     }
