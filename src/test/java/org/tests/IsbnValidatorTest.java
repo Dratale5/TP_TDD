@@ -1,5 +1,6 @@
 package org.tests;
 
+import org.exemple.Exceptions.IncorrectISBNCharacterException;
 import org.exemple.Exceptions.IncorrectISBNSizeException;
 import org.exemple.classes.IsbnValidator;
 import static org.junit.jupiter.api.Assertions.assertFalse;

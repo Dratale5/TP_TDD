@@ -1,5 +1,6 @@
 package org.exemple.classes;
 
+import org.exemple.Exceptions.IncorrectISBNCharacterException;
 import org.exemple.Exceptions.IncorrectISBNSizeException;
 
 public class IsbnValidator {
@@ -20,7 +21,7 @@ public class IsbnValidator {
         return total % 10 == 0;
     }
 
-    private boolean validateIsbn10(String ISBN) {
+    private boolean validateIsbn10(String ISBN) throws Exception {
         int total=0;
         for (int i=0; i<10;i++) {
             if (Character.isDigit(ISBN.charAt(i))) {
@@ -29,8 +30,7 @@ public class IsbnValidator {
             else {
                 if (ISBN.charAt(i) == 'X' && i==9) {
                     total += 10 * (10 - i);
-                } 
-                else return false;
+                } else throw new IncorrectISBNCharacterException(new String(""));
             }
         }
         return total % 11 == 0;
