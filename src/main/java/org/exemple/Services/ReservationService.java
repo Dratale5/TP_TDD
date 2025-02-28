@@ -81,4 +81,15 @@ public class ReservationService {
     public ArrayList<Reservation> getActualReservations() {
         return listeReservations;
     }
+
+    public ArrayList<Reservation> getHistoricReservation(Adherant _adherant) {
+        ArrayList<Reservation> ListeRetour = new ArrayList<Reservation>();
+        for (int i = 0; i < historiqueListeReservations.size(); i++) {
+            Reservation reservation = historiqueListeReservations.get(i);
+            if (reservation.getAdherant().equals(_adherant)) {
+                ListeRetour.add(historiqueListeReservations.get(i));
+            }
+        }
+        return ListeRetour;
+    }
 }
