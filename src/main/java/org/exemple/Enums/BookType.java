@@ -1,5 +1,5 @@
 package org.exemple.Enums;
 
 public enum BookType {
-    Poche, Broche, BD
+    Poche, Broche, BD, Roman
 }

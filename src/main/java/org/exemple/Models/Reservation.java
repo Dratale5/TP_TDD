@@ -8,4 +8,8 @@ public class Reservation {
         adherant = _adherant;
         livreReserve = _livreReserve;
     }
+
+    public Adherant getAdherant() {
+        return adherant;
+    }
 }
