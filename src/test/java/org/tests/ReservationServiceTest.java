@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import org.exemple.Enums.BookType;
 import org.exemple.Exceptions.BookNotAvailableException;
+import org.exemple.Exceptions.TooMuchReservationsException;
 import org.exemple.Models.Adherant;
 import org.exemple.Models.Book;
 import org.exemple.Services.ReservationService;
@@ -36,7 +37,7 @@ public class ReservationServiceTest {
     }
 
     @Test
-    void givenAdherant_WhenCreatingFourthReservation_ShouldReturnException() throws TooMuchReservationsException {
+    void givenAdherant_WhenCreatingFourthReservation_ShouldReturnException() throws Exception {
         Adherant adherant = new Adherant(1, "Vigner", "Anthony", LocalDate.of(1990, 4, 1), "Mr");
         Book Firstbook = new Book("9782266332439", "Âmes animales", "José Rodrigues Dos Santos", "Pocket", BookType.BD);
         Book Secondbook = new Book("9782958608613", "Manuscripto: Les lettres masquées de Venise", "Bruno Scudeller", "Inconnue", BookType.Roman);
@@ -47,6 +48,6 @@ public class ReservationServiceTest {
         reservationService.creerReservation(adherant, Secondbook);
         reservationService.creerReservation(adherant, Thirdbook);
 
-        assertThrows(TooMuchReservationsException.class, () -> creerReservation(adherant, FourthBook));
+        assertThrows(TooMuchReservationsException.class, () -> reservationService.creerReservation(adherant, Fourthbook));
     }
 }
