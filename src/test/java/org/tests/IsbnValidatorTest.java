@@ -44,8 +44,26 @@ public class IsbnValidatorTest {
     }
 
     @Test
-    public void whenWrongLength_ShouldReturnFalse() throws Exception {
+    public void whenWrongLength_ShouldReturnException() throws Exception {
         IsbnValidator validator = new IsbnValidator();
         assertThrows(IncorrectISBNSizeException.class, () -> validator.validateIsbn("22137313877"));
+    }
+
+    @Test
+    public void givenISBN10characters_WithLetterX_ShouldReturnTrue() throws Exception {
+        IsbnValidator validator = new IsbnValidator();
+
+        boolean result = validator.validateIsbn("043942089X");
+
+        assertTrue(result);
+    }
+
+    @Test
+    public void givenWrongISBN10characters_WithLetterX_ShouldReturnFalse() throws Exception {
+        IsbnValidator validator = new IsbnValidator();
+        
+        boolean result = validator.validateIsbn("053942089X");
+
+        assertFalse(result);
     }
 }
