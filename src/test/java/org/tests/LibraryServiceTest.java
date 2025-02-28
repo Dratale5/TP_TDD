@@ -1,10 +1,11 @@
 package org.tests;
 
 import org.exemple.Enums.BookType;
-import org.exemple.Interfaces.DBService;
-import org.exemple.Interfaces.WebService;
 import org.exemple.Models.Book;
+import org.exemple.Services.DBService;
 import org.exemple.Services.LibraryService;
+import org.exemple.Services.WebService;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
